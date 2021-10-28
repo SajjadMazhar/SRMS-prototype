@@ -18,7 +18,7 @@
   <div class="container-fluid">
     <a class="navbar-brand">H.S Result Portal</a>
     <form class="d-flex" action="/result" method="POST">
-      <input class="form-control me-2" type="search" placeholder="Search Result" aria-label="Search">
+      <input class="form-control me-2" type="search" name="rollNumber" placeholder="Enter Roll No." aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
@@ -64,24 +64,7 @@
                     <th>MARKS OBTAINED</th>
                     <th>GRADE</th>
                 </tr>
-                <tr>
-                    <td>PHYSICS</td>
-                    <td>100</td>
-                    <td>{{pObtained}}</td>
-                    <td>{{pGrade}}</td>
-                </tr>
-                <tr>
-                    <td>MATHEMATICS</td>
-                    <td>100</td>
-                    <td>{{mObtained}}</td>
-                    <td>{{mGrade}}</td>
-                </tr>
-                <tr>
-                    <td>CHEMISTRY</td>
-                    <td>100</td>
-                    <td>{{cObtained}}</td>
-                    <td>{{cGrade}}</td>
-                </tr>
+                {{{resultRowData}}}
             </tbody>
             <tfoot>
                 <tr>
