@@ -20,6 +20,9 @@ app.use("/result", Router);
 
 app.set("view engine", "hbs");
 
+app.get("/", (req, res) =>{
+    res.render("root");
+})
 app.get("/result/:roll", getResult);
 
 app.listen(port, ()=>{

@@ -29,7 +29,7 @@ const getGrades = (result) =>{
         }else{
             grade = "F";
             passStatus = "FAIL"
-            
+
         }
     let resultString = `
     <tr>
@@ -42,7 +42,7 @@ const getGrades = (result) =>{
 
     resultRows+=resultString;
 }
-    
+
     allGrades.push(totalMarksObtained);
     allGrades.push(resultRows);
     allGrades.push(passStatus)
@@ -56,7 +56,7 @@ exports.getResult = async (req, res)=>{
         let result = data[0].result;
         let grades = getGrades(result);
         let name = data[0].name.toUpperCase()
-        
+
         res.render("index", {name, roll:data[0].roll, dob:data[0].dob, gender:data[0].gender,
                             resultRowData:grades[1], total:grades[0], status:grades[2]})
     }catch(err){
@@ -67,12 +67,15 @@ exports.getResult = async (req, res)=>{
 
 exports.getYourResult = async (req, res)=>{
     try{
-        let rollNumber = req.body.rollNumber;
-        let data = await Result.find({roll:rollNumber}).select("name roll dob gender result");
+
+        let rollNumber = req.body.roll;
+        let studName = req.body.fname;
+
+        let data = await Result.find({$and:[{roll:rollNumber}, {name:studName}]}).select("name roll dob gender result");
         let result = data[0].result;
         let grades = getGrades(result);
         let name = data[0].name.toUpperCase()
-        
+
         res.render("index", {name, roll:data[0].roll, dob:data[0].dob, gender:data[0].gender,
                             resultRowData:grades[1], total:grades[0], status:grades[2]})
     }catch(err){
@@ -84,15 +87,13 @@ exports.getYourResult = async (req, res)=>{
 
 exports.postResult = async (req, res)=>{
     try{
+
         let resultData = await Result(req.body);
+        let savedData = await resultData.save();
         res.json({status:"result uploaded"});
 
     }catch(err){
         console.log("error occured", err);
         res.status(400).json({status:"fail to load"});
     }
-}
-
-exports.testResult = (req, res)=>{
-    res.render("login");
 }
